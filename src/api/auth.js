@@ -39,6 +39,7 @@ export const loginUser = async (username, password) => {
     });
     const result = await response.json();
     return result.data.token;
+
   } catch (err) {
     alert("Log in unsuccessful")
     console.error(err);
@@ -54,15 +55,17 @@ export const fetchMe = async (token) => {
       },
     });
     const result = await response.json();
+    console.log("result from fetchme", result) //shows username and stuff 
+    console.log("messages", result.data.messages)
     return result;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const logout = (setToken, setUser) => {
+export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("user");
   localStorage.clear();
-  setToken(null);
-  setUser({});
+  
 };

@@ -16,26 +16,36 @@ const Profile = ({ token }) => {
             getMe();
         }
     }, [token]);
+    const currentUser = localStorage.getItem('user');
+    const userSentMessages = messages.filter(message => message.post.author.username !== currentUser);
+const userReceivedMessages = messages.filter(message => message.post.author.username === currentUser);
 
     return (
         <div className="profile">
-            <h1 className="yourMessage">Your Messages: </h1>
-            <div className="inbox">
-                <h2>Inbox</h2>
-                {messages.map(message => (
-                    <div key={message._id} className="message">
-                        {message.post.author.username === localStorage.getItem("username") ? <Inbox message={message} id={message._id} token={token} /> : null}
-                    </div>
-                ))}
+            <div className="right">
+                <div className="inbox">
+                    <p className="myHeader">Inbox</p>
+                    <p className="noPosts">{userReceivedMessages.length === 0 ? "You have no messages" : null}</p>
+                    {messages.map(message => (
+                        <div key={message._id} className="message">
+                            {message.post.author.username === localStorage.getItem("user") ?
+                                <Inbox message={message} id={message._id} token={token} /> : null}
+                        </div>
+                    ))}
+                </div>
             </div>
-            <div className="outbox">
-                <h2>Out Going Messages</h2>
-                {messages.map(message => (
-                    <div key={message._id} className="message">
-                        {message.post.author.username !== localStorage.getItem("username") ? <Messages message={message} id={message._id} token={token} /> : null}
-                    </div>
+            <div className="left">
+                <div className="outbox">
+                    <p className="myHeader">Out Going Messages</p>
+                    <p className="noPosts">{userSentMessages.length === 0 ? "You have no messages" : null}</p>
+                    {messages.map(message => (
+                        <div key={message._id} className="message">
+                            {message.post.author.username !== localStorage.getItem("user") ?
+                                <Messages message={message} id={message._id} token={token} /> : null}
+                        </div>
 
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );

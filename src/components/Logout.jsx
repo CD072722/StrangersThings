@@ -5,6 +5,7 @@ const Logout = ({ user, setToken, setUser }) => {
 
   const handleLogout = () => {
     logout(setToken, setUser);
+    navigate('/');
   };
 
   return (

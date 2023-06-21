@@ -1,47 +1,109 @@
 import React, { useState } from "react";
-import { loginUser } from "../api/auth";
-import { Link } from "react-router-dom";
+import { fetchMe, loginUser } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../api/auth";
 
-
-const Login = ({ setToken, user }) => {
+const Login = ({ user, setToken, onClose }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = await registerUser(username, password);
+    localStorage.setItem("token", token);
+    setToken(token);
+    setUsername("");
+    setPassword("");
+
+    if (token) {
+      onClose(false);
+      const user = await fetchMe(token)
+      localStorage.setItem("user", user.data.username);
+      navigate('/');
+        location.reload();
+    }
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     const token = await loginUser(username, password);
     localStorage.setItem("token", token);
     setToken(token);
     setUsername("");
     setPassword("");
+   
+
+    if (token) {
+      onClose(false);
+      const user = await fetchMe(token)
+      localStorage.setItem("user", user.data.username);
+      navigate('/');
+        location.reload();
+    }
+  };
+
+  const toggleForm = () => {
+    setIsLogin(!isLogin);
   };
 
   return (
     <div className="loginCard">
-      <h2 className="user">{user?.username}</h2>
       <div className="cardHeader">
-        <div className="log">Log in</div>
+        <div className="log">{isLogin ? "Log In" : "Register"}</div>
+        <div className="close-button-nav" onClick={onClose}>
+          X
+        </div>
       </div>
-      <div className="loginForm">
-        <form onSubmit={handleSubmit}>
+      {isLogin ? (
+        <form className="loginForm" onSubmit={handleLogin}>
           <input
             onChange={(e) => setUsername(e.target.value)}
             value={username}
             type="text"
-            placeholder="Username*"
+            placeholder="Username"
             className="username"
           ></input>
           <input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             type="password"
-            placeholder="Password*"
-            className="password"
+            placeholder="Password"
+            className="username"
           ></input>
-          <button className="loginButton" type="submit">Log in</button>
+          <button type="submit" className="loginButton">
+            Login
+          </button>
         </form>
-        <span>Don't have an account? </span>
-        <Link className="createOne" to="/register">Create one</Link>
+      ) : (
+        <form className="loginForm" onSubmit={handleSubmit}>
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            type="text"
+            placeholder="Username"
+            className="username"
+          ></input>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            type="password"
+            placeholder="Password"
+            className="username"
+          ></input>
+          <button type="submit" className="loginButton">
+            Register
+          </button>
+        </form>
+      )}
+      <div id="createOne">
+        <button onClick={toggleForm}>
+          {isLogin
+            ? "Don't have an account? Create one"
+            : "Already have an account? Log in"}
+        </button>
+      
       </div>
     </div>
   );

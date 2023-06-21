@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div>
-      <NavBar user={user} />
+      <NavBar token={token} setToken={setToken} user={user} setUser={setUser}/>
       <RRoutes token={token} setToken={setToken} user={user} setUser={setUser} />
     </div>
   )

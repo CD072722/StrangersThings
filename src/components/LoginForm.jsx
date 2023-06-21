@@ -2,7 +2,6 @@ import "../App.css"
 import { useEffect } from "react";
 import Login from "./Login";
 import { fetchMe } from "../api/auth";
-import Logout from "./Logout";
 
 const LoginForm = ({ token, setToken, user, setUser }) => {
 
@@ -21,7 +20,6 @@ const LoginForm = ({ token, setToken, user, setUser }) => {
   return (
     <div className="loginParent">
       <Login setToken={setToken} user={user} />
-      <Logout token={token} setToken={setToken} user={user} setUser={setUser} />
     </div>
   );
 }

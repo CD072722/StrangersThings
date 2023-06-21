@@ -40,6 +40,7 @@ const Register = ({ setToken, user }) => {
           ></input>
           <button className="loginButton" type="submit">Sign Up</button>
         </form>
+        <span>Already have an account? </span>
         <Link className="createOne" to="/users/login">Log in</Link>
       </div>
     </div>

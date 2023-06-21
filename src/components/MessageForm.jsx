@@ -14,7 +14,7 @@ const MessageForm = ({ id, token }) => {
     return (
         <div>
             <form className="typing" onSubmit={handleSubmit}>
-                <textarea rows="2" cols="39" type="text" value={messagecontent} placeholder="Send a message..." onChange={(e) => setMessagecontent(e.target.value)}></textarea>
+                <input className='textArea' type="text" value={messagecontent} placeholder="Send a message..." onChange={(e) => setMessagecontent(e.target.value)}></input>
                 <button className="sendButton" type="submit">SEND</button>
             </form>
         </div>
