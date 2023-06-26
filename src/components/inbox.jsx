@@ -1,5 +1,6 @@
 import React from "react";
 
+//Display messages for user
 const Inbox = ({ message }) => {
     return (
         <div className="messageList">

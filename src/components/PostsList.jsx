@@ -4,12 +4,14 @@ import "../App.css";
 import DeletePost from "./DeletePost";
 import MessageForm from "./MessageForm";
 
+// PostsList component
 const PostsList = ({ token }) => {
     const [posts, setPosts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 9;
 
+    // Fetch posts data
     useEffect(() => {
         const fetchData = async () => {
             const result = await fetchPosts();
@@ -20,6 +22,7 @@ const PostsList = ({ token }) => {
         fetchData();
     }, []);
 
+    // Filter posts based on search term
     const filteredPosts = posts.filter(post => {
         const titleMatch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
         const authorMatch = post.author.username.toLowerCase().includes(searchTerm.toLowerCase());
@@ -31,10 +34,12 @@ const PostsList = ({ token }) => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
+    // Function to handle pagination
     const paginate = pageNumber => {
         setCurrentPage(pageNumber);
     };
 
+    // Render the posts list
     return (
         <div className="postsList">
             <div className="searchBar">
@@ -51,8 +56,7 @@ const PostsList = ({ token }) => {
                     <p className="description">{`About: ${post.description}`}</p>
                     <p className="postInfo">{`Price: ${post.price}`}</p>
                     <p className="postInfo">{`Location: ${post.location}`}</p>
-                    <p className="postInfo">{`Will Deliver: ${post.willDeliver ? "Yes" : "No"
-                        }`}</p>
+                    <p className="postInfo">{`Will Deliver: ${post.willDeliver ? "Yes" : "No"}`}</p>
                     <p className="postInfo">
                         {post.author.username === localStorage.getItem("user") ? (
                             ""
@@ -71,22 +75,21 @@ const PostsList = ({ token }) => {
                 </div>
             ))}
             <div className="pagination">
-                {Array.from({ length: Math.ceil(filteredPosts.length / postsPerPage) }).map(
-                    (item, index) => (
-                        <button
-                            key={index}
-                            onClick={() => paginate(index + 1)}
-                            id="paginateButton"
-                            className={currentPage === index + 1 ? "active" : ""}
-                        >
-                            {index + 1}
-                        </button>
-                    )
-                )}
+                {Array.from({ length: Math.ceil(filteredPosts.length / postsPerPage) }).map((item, index) => (
+                    <button
+                        key={index}
+                        onClick={() => paginate(index + 1)}
+                        id="paginateButton"
+                        className={currentPage === index + 1 ? "active" : ""}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
             </div>
         </div>
     );
 };
 
 export default PostsList;
+
 

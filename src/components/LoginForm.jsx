@@ -3,8 +3,10 @@ import { useEffect } from "react";
 import Login from "./Login";
 import { fetchMe } from "../api/auth";
 
+//Login Form Component
 const LoginForm = ({ token, setToken, user, setUser }) => {
 
+   // Fetch user information on component mount and update user state
   useEffect(() => {
     const getMe = async () => {
       const { data } = await fetchMe(token);
@@ -15,7 +17,6 @@ const LoginForm = ({ token, setToken, user, setUser }) => {
       getMe();
     }
   }, [token]);
-
 
   return (
     <div className="loginParent">

@@ -1,7 +1,7 @@
 import React from "react";
-import MessageForm from "./MessageForm";
 
-const Messages = ({ message, token, id }) => {
+// Messages component
+const Messages = ({ message }) => {
     return (
         <div className="messageList">
             <div className="messageTitle">{message.post.title}</div>

@@ -1,3 +1,4 @@
+// Cohort used for the database
 const cohort = "2303-FTB-MT-WEB-FT";
 const BASE_URL = `https://strangers-things.herokuapp.com/api/${cohort}`;
 
@@ -22,6 +23,7 @@ export const registerUser = async (username, password) => {
   }
 };
 
+//User login
 export const loginUser = async (username, password) => {
 
   try {
@@ -46,6 +48,7 @@ export const loginUser = async (username, password) => {
   }
 }
 
+//Fetch user information
 export const fetchMe = async (token) => {
   try {
     const response = await fetch(`${BASE_URL}/users/me`, {
@@ -63,6 +66,7 @@ export const fetchMe = async (token) => {
   }
 };
 
+//User logout
 export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");

@@ -1,6 +1,8 @@
+// Cohort used for the database
 const cohort = "2303-FTB-MT-WEB-FT";
 const BASE_URL = `https://strangers-things.herokuapp.com/api/${cohort}`;
 
+//Send a message
 export const postMessage = async (id, token, content) => {
     try {
         const response = await fetch(`${BASE_URL}/posts/${id}/messages`, {

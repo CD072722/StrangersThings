@@ -1,7 +1,8 @@
+// Cohort used for the database
 const cohort = "2303-FTB-MT-WEB-FT";
 const BASE_URL = `https://strangers-things.herokuapp.com/api/${cohort}`;
 
-
+//Fetch  all of the posts
 export const fetchPosts = async () => {
   try {
     const response = await fetch(`${BASE_URL}/posts`)
@@ -13,6 +14,7 @@ export const fetchPosts = async () => {
   }
 }
 
+//Make a post
 export const makePost = async (token, title, description, price, location, willDeliver) => {
 
   try {
@@ -40,6 +42,7 @@ export const makePost = async (token, title, description, price, location, willD
   }
 }
 
+//Delete a post owned by the user
 export const deletePost = async (id) => {
   const token = localStorage.getItem("token")
   try {

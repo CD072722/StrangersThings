@@ -3,12 +3,14 @@ import { fetchMe, loginUser } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../api/auth";
 
+//Login Component
 const Login = ({ user, setToken, onClose }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
 
+  // Handle form submission for user registration
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await registerUser(username, password);
@@ -26,6 +28,7 @@ const Login = ({ user, setToken, onClose }) => {
     }
   };
 
+  // Handle form submission for user login
   const handleLogin = async (e) => {
     e.preventDefault();
     const token = await loginUser(username, password);
@@ -44,6 +47,7 @@ const Login = ({ user, setToken, onClose }) => {
     }
   };
 
+  // Toggle between login and registration forms
   const toggleForm = () => {
     setIsLogin(!isLogin);
   };
